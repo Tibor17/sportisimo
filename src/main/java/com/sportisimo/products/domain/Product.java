@@ -8,9 +8,12 @@ import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import static javax.persistence.InheritanceType.JOINED;
+
 
 @Entity
 @Table(name = "PRODUCT")
+@Inheritance(strategy = JOINED)
 public class Product extends AbstractDeleteEntity {
     @ManyToMany
     @JoinTable(name = "PRODUCT_AND_TYPE",
@@ -33,6 +36,14 @@ public class Product extends AbstractDeleteEntity {
     @NotNull
     private Supplier supplier;
 
+    @Column(nullable = false)
+    @NotNull
+    private String size;
+
+    @Column(nullable = false)
+    @NotNull
+    private int length;
+
     public @NotNull Set<@NotNull ProductType> getProductTypes() {
         return productTypes;
     }
@@ -48,5 +59,22 @@ public class Product extends AbstractDeleteEntity {
 
     public void setSupplier(@NotNull Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    @NotNull
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 }
